@@ -1,0 +1,10 @@
+= form_for @truck do |f|
+  - if @truck.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@truck.errors.count, "error")} prohibited this truck from being saved:"
+      %ul
+        - @truck.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'
