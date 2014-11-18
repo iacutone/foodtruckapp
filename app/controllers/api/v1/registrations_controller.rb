@@ -1,6 +1,7 @@
 class Api::V1::RegistrationsController < Devise::RegistrationsController
   skip_before_filter :verify_authenticity_token
-  before_action :configure_permitted_parameters
+  
+  respond_to :json
   
   def create
     build_resource
