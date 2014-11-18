@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
-  devise_for :trucks
+  devise_for :trucks, :controllers => { registrations: 'api/v1/registrations' }
+  
   namespace :api do
     namespace :v1 do
       devise_scope :truck do
