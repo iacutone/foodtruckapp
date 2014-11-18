@@ -4,7 +4,7 @@ class Truck
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :token_authenticatable #, :validatable
+         :recoverable, :rememberable, :trackable,  #, :validatable
 
   ## Database authenticatable
   field :email,              type: String, default: ""
@@ -39,4 +39,11 @@ class Truck
   has_many :locations
   
   field :name, type: String
+  field :toek, type: String
+  
+  before_save :generate_token
+  
+  def generate_token
+    self.token = Digest::SHA1::hexdigest([Time.now, rand].join) 
+  end
 end
