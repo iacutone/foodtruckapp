@@ -8,7 +8,9 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'mongoid', '~> 4.0.0'
 gem 'rails', '4.1.6'
+gem 'rails_12factor'
 gem 'sass-rails', '~> 4.0.3'
+gem 'thin'
 gem 'uglifier', '>= 1.3.0'
 
 group :development do
