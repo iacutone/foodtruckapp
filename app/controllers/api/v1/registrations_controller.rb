@@ -4,7 +4,8 @@ class Api::V1::RegistrationsController < ApplicationController
   respond_to :json
 
   def create
-    @truck = Truck.create!(params[:truck])
+    @truck = Truck.new(params[:truck])
+    @truck.save!
     # build_resource
     # resource.skip_confirmation!
     # @truck = Truck.create(json stuff)

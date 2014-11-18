@@ -11,7 +11,11 @@ class Truck
   field :name,            type: String
   field :email,           type: String
   field :token,           type: String
-  field :password_digest, type: String
+  field :password_confirmation, type: String
   
   before_save :generate_token
+  
+  def generate_token
+     self.token = Digest::SHA1.hexdigest([self.id, Time.now, rand].join)
+  end
 end
