@@ -12,6 +12,8 @@ class Truck
   field :token,           type: String
   field :password_confirmation, type: String
   
+  has_secure_password
+  
   before_save :generate_token
   
   def generate_token
