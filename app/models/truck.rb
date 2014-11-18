@@ -10,7 +10,7 @@ class Truck
   field :name,            type: String
   field :email,           type: String
   field :token,           type: String
-  field :password_confirmation, type: String
+  field :password_digest, type: String
   
   has_secure_password
   
