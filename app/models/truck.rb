@@ -1,8 +1,7 @@
 class Truck
   include Mongoid::Document
   include Mongoid::Timestamps
-  
-  has_secure_password
+  include ActiveModel::SecurePassword
   
   has_many :locations
   

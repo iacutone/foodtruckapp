@@ -4,6 +4,7 @@ class Api::V1::RegistrationsController < ApplicationController
   respond_to :json
 
   def create
+    puts params
     @truck = Truck.new(params[:truck])
     @truck.save!
     # build_resource
