@@ -39,7 +39,7 @@ class Truck
   has_many :locations
   
   field :name, type: String
-  field :toek, type: String
+  field :token, type: String
   
   before_save :generate_token
   
