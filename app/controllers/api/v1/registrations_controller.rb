@@ -4,10 +4,9 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   # respond_to :json
   
   def create
-    puts resource
-    build_resource
-    resource.skip_confirmation!
-    if resource.save
+    @truck = Truck.new(params[:truck])
+    # @truck.skip_confirmation!
+    if @truck.save
       sign_in(resource, :store => false)
       render :status => 200,
            :json => { :success => true,
