@@ -1,5 +1,6 @@
 class Api::V1::RegistrationsController < Devise::RegistrationsController
   skip_before_filter :verify_authenticity_token
+  before_action :configure_permitted_parameters
   
   def create
     @truck = Truck.new(params[:truck])
@@ -16,6 +17,14 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
              :json => { :success => false,
                         :info => resource.errors.full_messages,
                         :data => {} }
+    end
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) do |u|
+      u.permit(:email, :password, :password_confirmation)
     end
   end
 end
