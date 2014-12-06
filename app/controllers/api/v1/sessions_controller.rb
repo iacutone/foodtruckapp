@@ -1,23 +1,29 @@
-class Api::V1::SessionsController < Devise::SessionsController
-  skip_before_filter :verify_authenticity_token,
-                     :if => Proc.new { |c| c.request.format == 'application/json' }
-
-  respond_to :json
+class Api::V1::SessionsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
 
   def create
-    warden.authenticate!(:scope => resource_name, :store => false, :recall => "#{controller_path}#failure")
-    render :status => 200,
-           :json => { :success => true,
-                      :info => t("devise.sessions.signed_in"),
-                      :data => { :auth_token => current_user.authentication_token } }
-  end
-
-  def destroy
-    warden.authenticate!(:scope => resource_name, :store => false, :recall => "#{controller_path}#failure")
-    current_user.reset_authentication_token!
-    render :status => 200,
-           :json => { :success => true,
-                      :info => t("devise.sessions.signed_out"),
-                      :data => {} }
+    truck = Truck.find_by(email: params['session']['truck']['email'].downcase)
+    if truck && truck.authenticate(params['session']['truck']['password'])
+      sign_in(truck)
+      render(
+              status: 200,
+              json: {
+                success: true,
+                data: {
+                  truck: truck,
+                  auth_token: current_truck.token
+                }
+              }
+            )
+    else
+      render(
+              status: :unprocessable_entity,
+              json: {
+                success: false,
+                info: truck.errors.full_messages,
+                data: {}
+              }
+            )
+    end
   end
 end

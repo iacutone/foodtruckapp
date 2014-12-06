@@ -1,22 +1,29 @@
-class Api::V1::RegistrationsController < Devise::RegistrationsController
+class Api::V1::RegistrationsController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  
-  respond_to :json
-  
+
   def create
-    build_resource
-    if resource.save
-      sign_in(resource, :store => false)
-      render :status => 200,
-           :json => { :success => true,
-                      :info => t("devise.registrations.signed_up"),
-                      :data => { :truck => resource,
-                                 :auth_token => current_truck.token } }
+    truck = Truck.new(params['truck'].permit(:email, :password))
+    if truck.save
+      sign_in(truck)
+      render(
+              status: 200,
+              json: {
+                success: true,
+                data: {
+                  truck: truck,
+                  auth_token: current_truck.token
+                }
+              }
+            )
     else
-      render :status => :unprocessable_entity,
-             :json => { :success => false,
-                        :info => resource.errors.full_messages,
-                        :data => {} }
+      render(
+              status: :unprocessable_entity,
+              json: {
+                success: false,
+                info: truck.errors.full_messages,
+                data: {}
+              }
+            )
     end
   end
 end

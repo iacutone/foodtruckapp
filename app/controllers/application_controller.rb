@@ -10,4 +10,22 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :password_confirmation) }
   end
+  
+  def sign_in(truck)
+    cookies.permanent[:token] = truck.token
+    self.current_truck = truck
+  end
+
+  def current_truck=(truck)
+    @current_truck = truck
+  end
+
+  def current_truck
+    @current_truck ||= Truck.find_by_token(cookies[:token])
+  end
+  
+  def sign_out
+    self.current_truck = nil
+    cookies.delete(:token)
+  end
 end
