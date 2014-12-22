@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'trucks#new'
+  root 'maps#index'
   resource :trucks
   
   devise_for :trucks #, :controllers => { registrations: 'api/v1/registrations' }
