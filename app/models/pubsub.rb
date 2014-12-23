@@ -6,6 +6,6 @@ class Pubsub
 
   def pub(truck_id, lat, long)
     data = {:truck_id => truck_id, :latitude => lat, :longitude => long}
-    redis.publish data.to_json
+    redis.publish 'stream', data.to_json
   end
 end

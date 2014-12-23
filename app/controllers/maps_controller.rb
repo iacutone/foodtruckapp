@@ -8,6 +8,11 @@ class MapsController < ApplicationController
 
   end
 
+  def location
+    Pubsub.new().pub(params[:truck_id], params[:latitude], params[:longitude])
+    head :no_content
+  end
+
   private
   def set_map
     @map = Map.find(params[:id])

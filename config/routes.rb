@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   root 'maps#index'
   resource :trucks
-
+  post 'location', to: 'maps#location'
   get 'locations_stream', to: 'streams#locations', as: :locations
   
   devise_for :trucks #, :controllers => { registrations: 'api/v1/registrations' }
