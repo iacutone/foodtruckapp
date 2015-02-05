@@ -19,7 +19,7 @@ class Api::V1::TrucksController < ApplicationController
     # @location = Location.create(longitude: params[:location][:longitude], 
     #                             latitude: params[:location][:latitude], 
     #                             truck_id: @truck.id)
-    Pubsub.new().pub(params[:truck_name], params[:location][:latitude], params[:location][:longitude])
+    Pubsub.new().pub(params)
     head :no_content
   end
 

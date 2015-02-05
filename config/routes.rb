@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   devise_for :trucks #, :controllers => { registrations: 'api/v1/registrations' }
   namespace :api do
     namespace :v1 do
+      post 'trucks' => 'trucks#create'
       devise_scope :truck do
         post 'registrations' => 'registrations#create', :as => 'register'
         post 'sessions' => 'sessions#create', :as => 'login'
