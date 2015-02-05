@@ -11,6 +11,7 @@ class Truck
   end
   
   field :email,           type: String
+  field :name,            type: String
   field :password_digest, type: String
   field :token, type: String
 end

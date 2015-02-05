@@ -2,7 +2,7 @@ class Api::V1::RegistrationsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def create
-    truck = Truck.new(params['truck'].permit(:email, :password))
+    truck = Truck.new(params['truck'].permit(:email, :password, :name))
     if truck.save
       sign_in(truck)
       render(
@@ -11,7 +11,8 @@ class Api::V1::RegistrationsController < ApplicationController
                 success: true,
                 data: {
                   truck: truck,
-                  auth_token: current_truck.token
+                  auth_token: current_truck.token,
+                  name: truck.name
                 }
               }
             )
