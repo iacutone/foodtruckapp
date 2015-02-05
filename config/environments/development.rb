@@ -28,7 +28,8 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-
+  # Need concurrency for multiple threads
+  config.allow_concurrency = true
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

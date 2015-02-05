@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :maps do
     collection do
-      get "locations_stream"
+      #get "locations_stream"
     end
   end
 
