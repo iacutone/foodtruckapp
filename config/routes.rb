@@ -10,15 +10,12 @@ Rails.application.routes.draw do
   post 'location', to: 'maps#location'
   get 'locations_stream', to: 'streams#locations', as: :locations
   
-  devise_for :trucks #, :controllers => { registrations: 'api/v1/registrations' }
   namespace :api do
     namespace :v1 do
-      post 'trucks' => 'trucks#create'
-      devise_scope :truck do
-        post 'registrations' => 'registrations#create', :as => 'register'
-        post 'sessions' => 'sessions#create', :as => 'login'
-        delete 'sessions' => 'sessions#destroy', :as => 'logout'
-      end
+    post 'trucks' => 'trucks#create'
+      post 'registrations' => 'registrations#create', :as => 'register'
+      post 'sessions' => 'sessions#create', :as => 'login'
+      delete 'sessions' => 'sessions#destroy', :as => 'logout'
     end
   end
   
