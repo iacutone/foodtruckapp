@@ -6,7 +6,6 @@ class StreamsController < ActionController::Base
     redis = Redis.new
     redis.subscribe('stream') do |on|
       on.message do |event, data|
-        puts data
         response.stream.write("data:#{ data }\n\n")
       end
     end

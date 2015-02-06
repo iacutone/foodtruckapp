@@ -5,13 +5,15 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
-
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMam5rGWt28ADYHpInbDdWfZLrETIU2hk&sensor=true">
+    </script>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
   </head>
   <body>
-
-  <%= yield %>
+    <div id="map-canvas"></div>
+    <%= yield %>
 
   </body>
 </html>
