@@ -18,6 +18,8 @@ $(document).ready(function(){
 
   function resolveMarker(event) {
     data = JSON.parse(event);
+    // check if data location hash is within the map canvas
+
     // see if allMarkers has marker via truck_id
     if (checkMarkers(data) == null)
     {
@@ -30,6 +32,7 @@ $(document).ready(function(){
       updateMarker(marker);
     }
   }
+
 
   function setMarker(data) {
     var truck_name = data.truck_name;
@@ -48,6 +51,10 @@ $(document).ready(function(){
 
   function updateMarker(event) {
     // update location of marker
+  }
+
+  function deleteMarker(event){
+    // add/update a timestamp on marker. pop off array if timestamp is 5?10? minutes stale
   }
 
   function checkMarkers(event) {
