@@ -12,7 +12,8 @@ class Api::V1::RegistrationsController < ApplicationController
                 data: {
                   truck: truck,
                   auth_token: current_truck.token,
-                  name: truck.name
+                  name: truck.name,
+                  id: truck.id.to_s
                 }
               }
             )
