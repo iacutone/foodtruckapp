@@ -2,6 +2,7 @@
 // All this logic will automatically be available in application.js.
 // All this logic will automatically be available in application.js.
 $(document).ready(function(){
+  var allMarkers = [];
   var mapOptions = {
       center: { lat: 37.333, lng: -122.031},
       zoom: 8,
@@ -16,7 +17,7 @@ $(document).ready(function(){
     }, false);
 
   function resolveMarker(event) {
-    // see if map has a marker via truck_id
+    // see if allMarkers has marker via truck_id
     // if marker is not on map, call setMarker
     // if marker is on map call updateMarker
   }
@@ -25,15 +26,17 @@ $(document).ready(function(){
     data = JSON.parse(event);
 
     var truck_name = data.truck_name;
-    var truck_id = "";
+    var truck_id = data.truck_id;
     var markerPosition = new google.maps.LatLng(data.location.latitude,data.location.longitude);
 
+    console.log(data);
     var marker = new google.maps.Marker({
-      position:markerPosition,
+      position: markerPosition,
       name: truck_name,
       id: truck_id
     });
     marker.setMap(map);
+    allMarkers.push(marker);
   }
 
   function updateMarker(event) {
