@@ -13,18 +13,25 @@ $(document).ready(function(){
 
   var source = new EventSource('/locations_stream');
     source.addEventListener('message', function(e) {
-        setMarker(e.data); //should call resolveMarker once truck_id available via the stream
+        resolveMarker(e.data);
     }, false);
 
   function resolveMarker(event) {
+    data = JSON.parse(event);
     // see if allMarkers has marker via truck_id
-    // if marker is not on map, call setMarker
-    // if marker is on map call updateMarker
+    if (checkMarkers(data) == null)
+    {
+      // if marker is not on map, call setMarker
+      setMarker(data);
+    }
+    else
+    {
+      // if marker is on map call updateMarker
+      updateMarker(marker);
+    }
   }
 
-  function setMarker(event) {
-    data = JSON.parse(event);
-
+  function setMarker(data) {
     var truck_name = data.truck_name;
     var truck_id = data.truck_id;
     var markerPosition = new google.maps.LatLng(data.location.latitude,data.location.longitude);
@@ -40,8 +47,22 @@ $(document).ready(function(){
   }
 
   function updateMarker(event) {
-    // if marker's location is significantly different than stream data, update marker
-    // otherwise do nothing
+    // update location of marker
+  }
+
+  function checkMarkers(event) {
+    var id = event.truck_id;
+    for(var i = 0; i < allMarkers.length; i++)
+    {
+      if(allMarkers[i].truck_id == id)
+      {
+        return allMarkers[i];
+      }
+      else
+      {
+        return null;
+      }
+    }
   }
 })
     
