@@ -12,16 +12,18 @@ $(document).ready(function(){
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
   var source = new EventSource('/locations_stream');
-    source.addEventListener('message', function(e) {
-        resolveMarker(e.data);
-    }, false);
+
+  source.addEventListener('message', function(e) {
+      resolveMarker(e.data);
+  }, false);
 
   function resolveMarker(event) {
     data = JSON.parse(event);
     // check if data location hash is within the map canvas
 
     // see if allMarkers has marker via truck_id
-    if (checkMarkers(data) == null)
+    var checkedMarker = checkMarkers(data);
+    if (checkedMarker == null)
     {
       // if marker is not on map, call setMarker
       setMarker(data);
@@ -29,39 +31,48 @@ $(document).ready(function(){
     else
     {
       // if marker is on map call updateMarker
-      updateMarker(marker);
+      updateMarker(checkedMarker,data);
     }
   }
-
 
   function setMarker(data) {
     var truck_name = data.truck_name;
     var truck_id = data.truck_id;
     var markerPosition = new google.maps.LatLng(data.location.latitude,data.location.longitude);
 
-    console.log(data);
     var marker = new google.maps.Marker({
       position: markerPosition,
-      name: truck_name,
-      id: truck_id
+      title: truck_name,
+      id: truck_id,
+      timestamp: Date.now()
     });
+
     marker.setMap(map);
     allMarkers.push(marker);
   }
 
-  function updateMarker(event) {
-    // update location of marker
+  function updateMarker(marker,data) {
+    var newPosition = new google.maps.LatLng(data.location.latitude,data.location.longitude);
+    marker.setPosition(newPosition);
+    marker.timestamp = Date.now();
   }
 
-  function deleteMarker(event){
-    // add/update a timestamp on marker. pop off array if timestamp is 5?10? minutes stale
-  }
-
-  function checkMarkers(event) {
-    var id = event.truck_id;
+  function checkStaleMarkers(){
     for(var i = 0; i < allMarkers.length; i++)
     {
-      if(allMarkers[i].truck_id == id)
+      if(allMarkers[i].timestamp > (Date.now() - 300000))
+      {
+        allMarkers.splice(i,1);
+      }
+    }
+  }
+
+  function checkMarkers(data) {
+    var id = data.truck_id;
+
+    for(var i = 0; i < allMarkers.length; i++)
+    {
+      if(allMarkers[i].id == id)
       {
         return allMarkers[i];
       }
