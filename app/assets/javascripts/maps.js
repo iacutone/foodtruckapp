@@ -3,9 +3,12 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function(){
   var allMarkers = [];
+  var centerLat = parseFloat(document.getElementById('map-canvas').getAttribute("data-lat"));
+  var centerLng = parseFloat(document.getElementById('map-canvas').getAttribute("data-lng"));
+
   var mapOptions = {
-      center: { lat: 37.333, lng: -122.031},
-      zoom: 8,
+      center: { lat: centerLat, lng: centerLng},
+      zoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
   

@@ -5,7 +5,7 @@ class MapsController < ApplicationController
   #each ios truck will push its location to a route, which will publish lat long to that truck's channel
   #figure out if Pubs stay in memory or if they are killed after subscribers read
   def index
-
+    @location = request.location
   end
 
   def location

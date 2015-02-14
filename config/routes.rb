@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   root 'maps#index'
-  resource :trucks
+  resources :trucks
   post 'location', to: 'maps#location'
   get 'locations_stream', to: 'streams#locations', as: :locations
   
