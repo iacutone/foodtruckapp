@@ -1,4 +1,4 @@
-class Pubsub
+class PubSub
   attr_reader :redis
   def initialize
     @redis = Redis.new
