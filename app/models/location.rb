@@ -6,4 +6,5 @@ class Location
   
   field :latitude,   type: String
   field :longtitude, type: String
+
 end

@@ -1,14 +1,20 @@
 source 'https://rubygems.org'
 ruby '2.1.3'
 
+gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'devise'
+gem 'foreman'
+gem 'geocoder'
 gem 'jbuilder', '~> 2.0'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'mongoid', '~> 4.0.0'
+gem 'redis'
 gem 'rails', '4.1.6'
+gem 'rails_12factor'
 gem 'sass-rails', '~> 4.0.3'
+gem 'puma'
 gem 'uglifier', '>= 1.3.0'
 
 group :development do
@@ -22,7 +28,7 @@ group :development do
   gem 'pry'
   gem 'quiet_assets'
   gem 'spring'
-  gem 'thin'
+  gem 'puma'
   gem 'xray-rails'
 end
 

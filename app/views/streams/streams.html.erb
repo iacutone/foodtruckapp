@@ -1,0 +1,62 @@
+<div class="map" id="map-canvas" style="width:800px;height:800px" data-lat="#{@location.data['latitude']}" data-lat="#{@location.data['longitude']}"></div>
+    <script type="text/javascript">
+        var myCenter = new google.maps.LatLng(40.768483,-73.981248);
+        function initialize() {
+          var mapOptions = {
+            center: myCenter,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+        
+          <% @green_markers.each do |g| %>
+          
+          var markerposition = new google.maps.LatLng(<%=g.yelp_location_coordinate_latitude%>,<%=g.yelp_location_coordinate_longitude%>);
+          
+          var marker<%=g.id%> = new google.maps.Marker({
+            position:markerposition,
+            
+            icon: '/assets/green/number_<%=g.id%>.png'
+            
+          });
+          marker<%=g.id%>.setMap(map);
+          var contentString = '<div>Restaurant: <%= link_to g.name, restaurant_path(g.id) %></div>' + '<br>' + '<div>Current Rank: <%= g.rank %></div>' + '<br>' +'<div>Phone: <%= g.yelp_display_phone %></div>'+ '<br>' +'<div>Yelp Review: <img src=<%= g.yelp_rating_img_url_small %>> </div>' + '<br>' +'<div>My Review: <%= link_to "Update Review", review_path(@reviews.where(:restaurant_id => g.id).first.id) %> </div>';
+          var infowindow<%=g.id%> = new google.maps.InfoWindow({
+            content: contentString
+            });
+          google.maps.event.addListener(marker<%=g.id%>, 'click', function() {
+            infowindow<%=g.id%>.open(map,marker<%=g.id%>);
+          });
+          
+          google.maps.event.addListener(map, 'click', function() {
+            infowindow<%=g.id%>.close();
+          });
+          <% end %>
+          <% @blue_markers.each do |b| %>
+          
+          var markerposition = new google.maps.LatLng(<%=b.yelp_location_coordinate_latitude%>,<%=b.yelp_location_coordinate_longitude%>);
+          
+          var marker<%=b.id%> = new google.maps.Marker({
+            position:markerposition,
+            
+            icon: '/assets/blue/number_<%=b.id%>.png'
+            
+          });
+          marker<%=b.id%>.setMap(map);
+          var contentString = '<div>Restaurant: <%= link_to b.name, restaurant_path(b.id) %></div>' + '<br>' + '<div>Current Rank: <%= b.rank %></div>' + '<br>' +'<div>Phone: <%= b.yelp_display_phone %></div>'+ '<br>' +'<div>Yelp Review: <img src=<%= b.yelp_rating_img_url_small %>> </div>' + '<br>' + '<div>My Review: <%= link_to "Update Review", review_path(@reviews.where(:restaurant_id => b.id).first.id) %> </div>';
+          
+          var infowindow<%=b.id%> = new google.maps.InfoWindow({
+            content: contentString
+            });
+          google.maps.event.addListener(marker<%=b.id%>, 'click', function() {
+            infowindow<%=b.id%>.open(map,marker<%=b.id%>);
+          });
+          
+          google.maps.event.addListener(map, 'click', function() {
+            infowindow<%=b.id%>.close();
+          });
+          <% end %>
+        
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+      </script>
