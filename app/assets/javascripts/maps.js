@@ -17,6 +17,7 @@ $(document).ready(function(){
   var source = new EventSource('/locations_stream');
 
   source.addEventListener('message', function(e) {
+      console.log(e.data);
       resolveMarker(e.data);
   }, false);
 
