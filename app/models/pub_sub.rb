@@ -1,7 +1,8 @@
 class PubSub
   attr_reader :redis
   def initialize
-    @redis = Redis.new
+    uri = URI.parse(ENV["REDISTOGO_URL"])
+    @redis = Redis.new(:url => ENV['REDISTOGO_URL'])
   end
 
   def pub(hsh)
