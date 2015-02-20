@@ -3,8 +3,6 @@ class StreamsController < ActionController::Base
 
   def locations
     response.headers['Content-Type'] = 'text/event-stream'
-    uri = URI.parse(ENV["REDISTOGO_URL"])
-    redis = Redis.new(:url => ENV['REDISTOGO_URL'])
     redis.subscribe('stream') do |on|
       on.message do |event, data|
         Rails.logger.debug data
@@ -13,5 +11,13 @@ class StreamsController < ActionController::Base
     end
     ensure
       response.stream.close
+  end
+  
+  def redis
+    @redis ||= (redis_url ? Redis.new(url: redis_url) : Redis.new)
+  end
+  
+  def redis_url
+    ENV['REDISCLOUD_URL'] || nil
   end
 end
