@@ -1,2 +1,2 @@
-web: bundle exec puma -p $PORT -t 0:22
+web: bundle exec puma -p $PORT -t 0:2
 redis: redis-server
